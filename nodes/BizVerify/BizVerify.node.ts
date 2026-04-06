@@ -3,8 +3,8 @@ import type {
   INodeExecutionData,
   INodeType,
   INodeTypeDescription,
+  IDataObject,
 } from 'n8n-workflow';
-import { NodeConnectionType } from 'n8n-workflow';
 
 export class BizVerify implements INodeType {
   description: INodeTypeDescription = {
@@ -17,8 +17,8 @@ export class BizVerify implements INodeType {
     defaults: {
       name: 'BizVerify',
     },
-    inputs: [NodeConnectionType.Main],
-    outputs: [NodeConnectionType.Main],
+    inputs: ['main'],
+    outputs: ['main'],
     credentials: [
       {
         name: 'bizVerifyApi',
@@ -234,7 +234,7 @@ export class BizVerify implements INodeType {
         });
       }
 
-      returnData.push({ json: response as Record<string, unknown> });
+      returnData.push({ json: response as IDataObject });
     }
 
     return [returnData];
