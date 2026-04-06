@@ -1,0 +1,11 @@
+{
+  "node": "n8n-nodes-bizverify.bizVerify",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": ["Data & Storage"],
+  "resources": {
+    "primaryDocumentation": [
+      { "url": "https://docs.bizverify.co/guides/ai-agents#n8n" }
+    ]
+  }
+}

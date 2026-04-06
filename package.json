@@ -1,0 +1,28 @@
+{
+  "name": "n8n-nodes-bizverify",
+  "version": "0.1.0",
+  "description": "n8n community node for BizVerify — verify business entities against official government registries",
+  "keywords": ["n8n-community-node-package", "n8n", "bizverify", "business-verification"],
+  "license": "MIT",
+  "author": { "name": "BizVerify", "email": "hello@bizverify.co" },
+  "repository": { "type": "git", "url": "https://github.com/BizVerify/bizverify-n8n" },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "tsc --noEmit"
+  },
+  "files": ["dist"],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": ["dist/credentials/BizVerifyApi.credentials.js"],
+    "nodes": ["dist/nodes/BizVerify/BizVerify.node.js"]
+  },
+  "devDependencies": {
+    "n8n-workflow": "^1.0.0",
+    "typescript": "^5.4.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "^1.0.0"
+  }
+}
