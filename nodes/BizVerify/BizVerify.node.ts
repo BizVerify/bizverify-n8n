@@ -72,7 +72,7 @@ export class BizVerify implements INodeType {
           { name: 'Full', value: 'full' },
           { name: 'Pre-Check', value: 'pre_check' },
         ],
-        default: 'full',
+        default: 'pre_check',
         displayOptions: { show: { operation: ['verifyBusiness'] } },
       },
       {
@@ -82,6 +82,24 @@ export class BizVerify implements INodeType {
         default: false,
         displayOptions: { show: { operation: ['verifyBusiness'] } },
         description: 'Whether to force fresh data from government registry',
+      },
+      {
+        displayName: 'Entity Type',
+        name: 'entityType',
+        type: 'string',
+        default: '',
+        required: false,
+        displayOptions: { show: { operation: ['verifyBusiness'] } },
+        description: 'Optional entity type hint (e.g. "LLC", "Corporation", "LP"). Helps disambiguate results.',
+      },
+      {
+        displayName: 'Webhook URL',
+        name: 'webhookUrl',
+        type: 'string',
+        default: '',
+        required: false,
+        displayOptions: { show: { operation: ['verifyBusiness'] } },
+        description: 'URL to receive webhook notification when verification completes or fails',
       },
 
       // Search Entities fields
@@ -103,10 +121,19 @@ export class BizVerify implements INodeType {
         description: 'Jurisdiction code to search in (optional — searches all active if empty)',
       },
       {
+        displayName: 'Entity Type',
+        name: 'entityType',
+        type: 'string',
+        default: '',
+        required: false,
+        displayOptions: { show: { operation: ['searchEntities'] } },
+        description: 'Optional entity type filter (e.g. "LLC", "Corporation")',
+      },
+      {
         displayName: 'Limit',
         name: 'limit',
         type: 'number',
-        default: 10,
+        default: 50,
         displayOptions: { show: { operation: ['searchEntities', 'getEntityHistory'] } },
         description: 'Maximum number of results to return',
       },
@@ -157,16 +184,22 @@ export class BizVerify implements INodeType {
       let response: unknown;
 
       if (operation === 'verifyBusiness') {
+        const verifyBody: Record<string, unknown> = {
+          entity_name: this.getNodeParameter('entityName', i) as string,
+          jurisdiction: this.getNodeParameter('jurisdiction', i) as string,
+          verification_level: this.getNodeParameter('level', i) as string,
+          force_refresh: this.getNodeParameter('forceRefresh', i) as boolean,
+        };
+        const entityType = this.getNodeParameter('entityType', i) as string;
+        if (entityType) verifyBody.entity_type = entityType;
+        const webhookUrl = this.getNodeParameter('webhookUrl', i) as string;
+        if (webhookUrl) verifyBody.webhook_url = webhookUrl;
+
         response = await this.helpers.httpRequestWithAuthentication.call(this, 'bizVerifyApi', {
           method: 'POST',
           url: `${baseUrl}/v1/verify`,
           json: true,
-          body: {
-            entity_name: this.getNodeParameter('entityName', i) as string,
-            jurisdiction: this.getNodeParameter('jurisdiction', i) as string,
-            verification_level: this.getNodeParameter('level', i) as string,
-            force_refresh: this.getNodeParameter('forceRefresh', i) as boolean,
-          },
+          body: verifyBody,
         });
       } else if (operation === 'searchEntities') {
         const body: Record<string, unknown> = {
@@ -175,6 +208,8 @@ export class BizVerify implements INodeType {
         };
         const jurisdiction = this.getNodeParameter('searchJurisdiction', i) as string;
         if (jurisdiction) body.jurisdiction = jurisdiction;
+        const searchEntityType = this.getNodeParameter('entityType', i) as string;
+        if (searchEntityType) body.entity_type = searchEntityType;
 
         response = await this.helpers.httpRequestWithAuthentication.call(this, 'bizVerifyApi', {
           method: 'POST',
