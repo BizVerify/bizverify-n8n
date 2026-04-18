@@ -69,11 +69,12 @@ export class BizVerify implements INodeType {
         name: 'level',
         type: 'options',
         options: [
-          { name: 'Full', value: 'full' },
-          { name: 'Pre-Check', value: 'pre_check' },
+          { name: 'Deep Verification', value: 'deep' },
+          { name: 'Quick Check', value: 'quick' },
         ],
-        default: 'pre_check',
+        default: 'quick',
         displayOptions: { show: { operation: ['verifyBusiness'] } },
+        description: 'Quick check (1 credit) or Deep verification (15 credits). Deep availability varies by jurisdiction.',
       },
       {
         displayName: 'Force Refresh',
