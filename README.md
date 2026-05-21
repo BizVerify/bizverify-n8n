@@ -18,8 +18,8 @@
 
 | Operation | Description | Credits |
 |-----------|-------------|---------|
-| Verify Business | Verify a business entity in a jurisdiction | 1-25 |
-| Search Entities | Search entities by name | 2/jurisdiction |
+| Verify Business | Confirm a specific named business (existence, status, good standing) in one jurisdiction | 1-25 |
+| Search Entities | Discover/list candidate businesses when the exact entity is unknown | 2/jurisdiction |
 | Check Job Status | Check async job status | Free |
 | Get Entity | Get cached entity details | Free |
 | Get Entity History | Get verification history | 1 |

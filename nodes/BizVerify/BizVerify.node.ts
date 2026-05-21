@@ -32,8 +32,8 @@ export class BizVerify implements INodeType {
         type: 'options',
         noDataExpression: true,
         options: [
-          { name: 'Verify Business', value: 'verifyBusiness', description: 'Verify a business entity in a jurisdiction' },
-          { name: 'Search Entities', value: 'searchEntities', description: 'Search for business entities by name' },
+          { name: 'Verify Business', value: 'verifyBusiness', description: 'Confirm a specific named business — existence, status, and good standing — in one jurisdiction' },
+          { name: 'Search Entities', value: 'searchEntities', description: 'Discover/list candidate businesses when the exact entity is unknown' },
           { name: 'Check Job Status', value: 'checkJobStatus', description: 'Check the status of an async verification job' },
           { name: 'Get Entity', value: 'getEntity', description: 'Get cached entity details' },
           { name: 'Get Entity History', value: 'getEntityHistory', description: 'Get verification history for an entity' },
