@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-bizverify",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "n8n community node for BizVerify — verify business entities against official government registries",
   "keywords": ["n8n-community-node-package", "n8n", "bizverify", "business-verification"],
   "license": "MIT",
